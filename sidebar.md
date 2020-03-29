@@ -1,3 +1,5 @@
+  - [Actor](/Actor/README.md)
+    
   - [内存模型](/内存模型/README.md)
     - [JMM](/内存模型/JMM.md)
     - [内存屏障](/内存模型/内存屏障.md)
@@ -23,10 +25,8 @@
     - [协程](/并发基础/协程.md)
     - [并发与并行](/并发基础/并发与并行.md)
   - [并发模型](/并发模型/README.md)
-    - [Actor](/并发模型/Actor.md)
     - [CSP](/并发模型/CSP.md)
     - [Disruptor](/并发模型/Disruptor.md)
-    - [MapReduce](/并发模型/MapReduce.md)
     - [主从模型](/并发模型/主从模型.md)
     - [事件流驱动的并发](/并发模型/事件流驱动的并发.md)
     - [基于软件事务内存的并发](/并发模型/基于软件事务内存的并发.md)
@@ -35,7 +35,8 @@
     - [生产者与消费者](/并发模型/生产者与消费者.md)
     - [结构化并发](/并发模型/结构化并发.md)
   - [异步编程](/异步编程/README.md)
-    
+    - [Futures & Promises](/异步编程/Futures%20&%20Promises/README.md)
+      
   - [线程协作](/线程协作/README.md)
     - [TencentOS 中信号量的实现](/线程协作/TencentOS%20中信号量的实现.md)
     - [线程池](/线程协作/线程池.md)
