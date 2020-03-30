@@ -17,12 +17,12 @@ Futures 和 Promises 是异步编程的一种流行抽象，尤其是在分布�
 - completed/determined：计算完毕，可以获得值。
 - incomplete/undetermined：计算还在进行中。
 
-稍后我们将看到，在期货/承诺的某些变体中引入了其他状态，以更好地支持错误处理和取消之类的需求。重要的是，期货/承诺通常可以实现一定程度的并发。 也就是说，在期货的第一个定义中：
+稍后我们将看到，在 Futures/Promises 的某些变体中引入了其他状态，以更好地支持错误处理和取消之类的需求。重要的是，Futures/Promises 通常可以实现一定程度的并发。 也就是说，在 Futures 的第一个定义中：
 
 > The construct ( future X ) immediately returns a future for the value of the expression X and concurrently begins evaluating X. When the evaluation of X yields a value, that value replaces the future.
 >
 > - (Halstead, 1985)
 
-期货/承诺的某些解释具有与之相关的类型，而另一些则没有。 通常，未来/承诺是单项任务； 也就是说，它只能被写入一次。 一些解释是阻塞的（同步的），另一些则是完全非阻塞的（异步的）。 某些解释必须显式启动（即手动启动），而在其他解释中，计算是隐式启动的。
+Futures/Promises 的某些解释具有与之相关的类型，而另一些则没有。 通常，未来/承诺是单项任务； 也就是说，它只能被写入一次。 一些解释是阻塞的（同步的），另一些则是完全非阻塞的（异步的）。 某些解释必须显式启动（即手动启动），而在其他解释中，计算是隐式启动的。
 
-受函数编程的启发，此构造的不同解释之间的主要区别之一与流水线或组合有关。 对期货/承诺的一些较流行的解释使链接操作或定义在完成由期货/承诺表示的计算时要调用的操作的流水线成为可能。 这与大量使用回调或更强制性的直接阻止方法形成对比。
+受函数编程的启发，此构造的不同解释之间的主要区别之一与流水线或组合有关。 对 Futures/Promises 的一些较流行的解释使链接操作或定义在完成由 Futures/Promises 表示的计算时要调用的操作的流水线成为可能。 这与大量使用回调或更强制性的直接阻止方法形成对比。
