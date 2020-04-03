@@ -37,7 +37,7 @@
 
 ![并发编程](https://s2.ax1x.com/2019/09/02/nCL9Ej.png)
 
-本节主要讨论并发编程理论相关的内容，本书的精排目录导航版请参考 [https://ng-tech.icu/Concurrent-Series](https://ng-tech.icu/Concurrent-Series)。
+本篇主要讨论并发编程理论相关的内容，其精排目录导航版请参考 [https://ng-tech.icu/Concurrent-Series](https://ng-tech.icu/Concurrent-Series)。本篇专注于通用的并发理论知识，各语言级别实现可以参考 [Java 并发编程](http://ng-tech.icu/Java-Series/)、[Go 并发编程](http://ng-tech.icu/Go-Series/)、[JavaScript 异步编程](http://ng-tech.icu/JavaScript-Series/)等。
 
 # Nav | 导读
 
