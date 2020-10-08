@@ -16,14 +16,14 @@
   <p align="center">
     📚深入浅出并发编程实践：并发基础、并发控制、并发模型、并发 IO
     <br />
-    <a href="https://github.com/wx-chevalier/Concurrent-Series"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Series"><strong>在线阅读</strong></a>
     <br />
     <br />
-    <a href="https://github.com/wx-chevalier/Concurrent-Series">View Demo</a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Series">速览手册</a>
     ·
     <a href="https://github.com/wx-chevalier/Concurrent-Series/issues">Report Bug</a>
     ·
-    <a href="https://github.com/wx-chevalier/Concurrent-Series/issues">Request Feature</a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Series/issues">参考资料</a>
   </p>
 </p>
 
