@@ -48,6 +48,6 @@ Reactor 模型还可以与多进程、多线程结合起来用，既实现异步
 
 协程从底层技术角度看实际上还是异步 IO Reactor 模型，应用层自行实现了任务调度，借助 Reactor 切换各个当前执行的用户态线程，但用户代码中完全感知不到 Reactor 的存在。
 
-# 链接
+# TBD
 
 - https://blog.csdn.net/u013074465/article/details/46276967

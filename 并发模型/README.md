@@ -16,7 +16,7 @@
 
 - Lambda 架构：大数据时代的到来离不开并行——现在我们只需要增加计算资源，就能具有处理 TB 级数据的能力。Lambda 架构综合了 MapReduce 和流式处理的特点，是一种可以处理多种大数据问题的架构。
 
-# 链接
+# TBD
 
 - https://medium.com/one-datum-at-a-time/an-exploration-into-concurrent-programming-and-concurrency-models-b22144950a88
 

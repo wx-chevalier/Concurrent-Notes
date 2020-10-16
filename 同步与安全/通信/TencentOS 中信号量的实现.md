@@ -1,5 +1,5 @@
 # TecentOS 中信号量的实现
 
-# 链接
+# TBD
 
 - https://mp.weixin.qq.com/s/URIxdyAmmvqnGx9ZUVerVw
