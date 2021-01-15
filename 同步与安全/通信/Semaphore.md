@@ -23,7 +23,7 @@ int sem_getvalue(sem_t * sem, int * sval);//获取当前信号量的值
 
 信号量与普通整型变量的区别：
 
-- 信号量(semaphore)是非负整型变量，除了初始化之外，它只能通过两个标准原子操作：wait(semap) , signal(semap) ; 来进行访问；
+- 信号量(semaphore)是非负整型变量，除了初始化之外，它只能通过两个标准原子操作：wait(semap), signal(semap) ; 来进行访问；
 
 - 操作也被成为 PV 原语(P 来源于 Dutch proberen"测试"，V 来源于 Dutch verhogen"增加")，而普通整型变量则可以在任何语句块中被访问；
 
