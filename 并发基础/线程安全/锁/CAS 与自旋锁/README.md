@@ -171,23 +171,55 @@ int pthread_spin_unlock(pthread_spinlock_t *lock) {
 
 自旋锁与互斥量类似，但它不是通过休眠使进程阻塞，而是在获取锁之前一直处于忙等（自旋）阻塞状态。自旋锁可以用于以下情况：锁被持有的时间短，而且线程并不希望在重新调度上花费太多的成本。
 
-# MVCC
+# 乐观锁 CAS
 
-为了实现可串行化，同时避免锁机制存在的各种问题，我们可以采用基于多版本并发控制（Multiversion concurrency control，MVCC）思想的无锁事务机制。人们一般把基于锁的并发控制机制称成为悲观机制，而把 MVCC 机制称为乐观机制。这是因为锁机制是一种预防性的，读会阻塞写，写也会阻塞读，当锁定粒度较大，时间较长时并发性能就不会太好；而 MVCC 是一种后验性的，读不阻塞写，写也不阻塞读，等到提交的时候才检验是否有冲突，由于没有锁，所以读写不会相互阻塞，从而大大提升了并发性能。我们可以借用源代码版本控制来理解 MVCC，每个人都可以自由地阅读和修改本地的代码，相互之间不会阻塞，只在提交的时候版本控制器会检查冲突，并提示 merge。目前，Oracle、PostgreSQL 和 MySQL 都已支持基于 MVCC 的并发机制，但具体实现各有不同。
+在 JDK1.5 中新增 `java.util.concurrent` (J.U.C)就是建立在 CAS 之上的。相对于对于 synchronized 这种阻塞算法，CAS 是非阻塞算法的一种常见实现。所以 J.U.C 在性能上有了很大的提升。我们以 `java.util.concurrent` 中的 `AtomicInteger` 为例，看一下在不使用锁的情况下是如何保证线程安全的。主要理解 `getAndIncrement` 方法，该方法的作用相当于 `++i` 操作。
 
-MVCC 的一种简单实现是基于 CAS（Compare-and-swap）思想的有条件更新（Conditional Update）。普通的 update 参数只包含了一个 `keyValueSet’，Conditional Update` 在此基础上加上了一组更新条件 `conditionSet { … data[keyx]=valuex, … }`，即只有在 D 满足更新条件的情况下才将数据更新为 keyValueSet’；否则，返回错误信息。这样，L 就形成了如下图所示的 `Try/Conditional Update/(Try again)` 的处理模式：
+```java
+public class AtomicInteger extends Number implements java.io.Serializable {
+  private volatile int value;
 
-对于常见的修改用户帐户信息的例子而言，假设数据库中帐户信息表中有一个 `version` 字段，当前值为 1；而当前帐户余额字段(balance)为 100。
+  public final int get() {
+    return value;
+  }
 
-- 操作员 A 此时将其读出（version=1），并从其帐户余额中扣除 50 (100-50)。
+  public final int getAndIncrement() {
+    for (;;) {
+      int current = get();
+      int next = current + 1;
+      if (compareAndSet(current, next)) return current;
+    }
+  }
 
-- 在操作员 A 操作的过程中，操作员 B 也读入此用户信息（version=1），并从其帐户余额中扣除 20（100-20）。
+  public final boolean compareAndSet(int expect, int update) {
+    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+  }
+}
+```
 
-- 操作员 A 完成了修改工作，将数据版本号加一（version=2），连同帐户扣除后余额（balance=50），提交至数据库更新，此时由于提交数据版本大于数据库记录当前版本，数据被更新，数据库记录 version 更新为 2。
+在没有锁的机制下需要字段 value 要借助 volatile 原语，保证线程间的数据是可见的。这样在获取变量的值的时候才能直接读取。然后来看看 `++i` 是怎么做到的。`getAndIncrement` 采用了 CAS 操作，每次从内存中读取数据然后将此数据和 `+1` 后的结果进行 CAS 操作，如果成功就返回结果，否则重试直到成功为止。而 `compareAndSet` 利用 JNI 来完成 CPU 指令的操作。
 
-- 操作员 B 完成了操作，也将版本号加一（version=2）试图向数据库提交数据（balance=80），但此时比对数据库记录版本时发现，操作员 B 提交的数据版本号为 2，数据库记录当前版本也为 2，不满足提交版本必须大于记录当前版本才能执行更新的乐观锁策略，因此，操作员 B 的提交被驳回。这样，就避免了操作员 B 用基于 version=1 的旧数据修改的结果覆盖操作员 A 的操作结果的可能。
+# 自旋锁
 
-从上面的例子可以看出，乐观锁机制避免了长事务中的数据库加锁开销(操作员 A 和操作员 B 操作过程中，都没有对数据库数据加锁)，大大提升了大并发量下的系统整体性能表现。需要注意的是，乐观锁机制往往基于系统中的数据存储逻辑，因此也具备一定的局限性，如在上例中，由于乐观锁机制是在我们的系统中实现，来自外部系统的用户余额更新操作不受我们系统的控制，因此可能会造成脏数据被更新到数据库中。
+自旋锁是采用让当前线程不停地的在循环体内执行实现的，当循环的条件被其他线程改变时才能进入临界区。
+
+```java
+public class SpinLock {
+  private AtomicReference<Thread> sign = new AtomicReference<>();
+
+  public void lock() {
+    Thread current = Thread.currentThread();
+    while (!sign.compareAndSet(null, current)) {}
+  }
+
+  public void unlock() {
+    Thread current = Thread.currentThread();
+    sign.compareAndSet(current, null);
+  }
+}
+```
+
+使用了 CAS 原子操作，lock 函数将 owner 设置为当前线程，并且预测原来的值为空。unlock 函数将 owner 设置为 null，并且预测值为当前线程。当有第二个线程调用 lock 操作时由于 owner 值不为空，导致循环一直被执行，直至第一个线程调用 unlock 函数将 owner 设置为 null，第二个线程才能进入临界区。由于自旋锁只是将当前线程不停地执行循环体，不进行线程状态的改变，所以响应速度更快。但当线程数不停增加时，性能下降明显，因为每个线程都需要执行，占用 CPU 时间。如果线程竞争不激烈，并且保持锁的时间段。适合使用自旋锁。
 
 # TBD
 
