@@ -22,7 +22,7 @@
 
 ## 非阻塞 IO (Non-Blocking IO)
 
-linux 下，可以通过设置 socket 使其变为 non-blocking。当对一个 non-blocking socket 执行读操作时，流程是这个样子：
+linux 下，可以通过设置 socket 使其变为 non-blocking。当对一个 non-blocking socket 执行读操作时，流程是如下图所示：
 
 ![non-blocking](https://i.postimg.cc/bJ192qYp/image.png)
 
