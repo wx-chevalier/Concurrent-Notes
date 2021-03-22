@@ -16,6 +16,6 @@ Future/Promise 可以传递，等待或链接在一起。这些属性有助于�
 
 ## Twitter Finagle
 
-# TBD
+# Links
 
 - http://dist-prog-book.com/chapter/2/futures.html#implicit-vs-explicit-promises

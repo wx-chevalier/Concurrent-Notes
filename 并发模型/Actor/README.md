@@ -16,6 +16,6 @@ Actor 由 3 部分组成：状态（State）、行为（Behavior）、邮箱（M
 
 ![Actor 示意图](https://s3.ax1x.com/2021/01/28/y9KVmT.png)
 
-# TBD
+# Links
 
 - http://dist-prog-book.com/chapter/3/message-passing.html#introduction
