@@ -68,7 +68,7 @@ Doug Lea 把 Reactor 模式分为三种类型，分别是：Basic version, Multi
 
 这种模型是将 Reactor 分成两部分，mainReactor 负责监听 server socket、accept 新连接，并将建立的 socket 分派给 subReactor；subReactor 负责多路分离已连接的 socket，读写网络数据；而对业务处理的功能，交给 worker 线程池来完成。
 
-# 案例：Redis Reactor
+# 案例-Redis Reactor
 
 ## 核心组件
 
