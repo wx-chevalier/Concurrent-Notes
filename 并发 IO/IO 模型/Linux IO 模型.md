@@ -32,7 +32,7 @@ linux 下，可以通过设置 socket 使其变为 non-blocking。当对一个 n
 
 我们都知道，select/epoll 的好处就在于单个 process 就可以同时处理多个网络连接的 IO。它的基本原理就是 select/epoll 这个 function 会不断的轮询所负责的所有 socket，当某个 socket 有数据到达了，就通知用户进程。它的流程如图：
 
-![IO Multiplexing](https://i.postimg.cc/52vyJys4/image.png)
+![IO Multiplexing](https://pic.imgdb.cn/item/6077cf498322e6675c51f93e.png)
 
 Linux 提供 select/epoll，进程通过将一个或者多个 fd 传递给 select 或者 poll 系统调用，阻塞在 select 操作上，这样 select/poll 可以帮我们侦测多个 fd 是否处于就绪状态。select/poll 是顺序扫描 fd 是否就绪，而且支持的 fd 数量有限，因此它的使用受到一定的限制。Linux 还提供了一个 epoll 系统调用，epoll 使用基于事件驱动的方式代替顺序扫描，因此性能更高一些。
 
