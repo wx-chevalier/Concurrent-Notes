@@ -16,9 +16,9 @@
 
 当用户进程调用了 recvfrom 这个系统调用，内核就开始了 IO 的第一个阶段：等待数据准备。对于 network io 来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的 UDP 包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当内核一直等到数据准备好了，它就会将数据从内核中拷贝到用户内存，然后内核返回结果，用户进程才解除 block 的状态，重新运行起来。所以，blocking IO 的特点就是在 IO 执行的两个阶段都被 block 了。（整个过程一直是阻塞的）
 
-![Blocking IO](https://i.postimg.cc/SxZTyQRP/image.png)
+![Blocking IO](https://pic.imgdb.cn/item/60861c8cd1a9ae528f961d8a.png)
 
-![Blocking IO 时序图](https://i.postimg.cc/0yJCQP6y/image.png)
+![Blocking IO 时序图](https://pic.imgdb.cn/item/60861c9dd1a9ae528f969830.png)
 
 ## 非阻塞 IO (Non-Blocking IO)
 
