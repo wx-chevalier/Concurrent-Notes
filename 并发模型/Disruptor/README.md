@@ -4,6 +4,8 @@ Disruptor 是英国外汇交易公司 LMAX 开发的一个高性能队列，研�
 
 目前，包括 Apache Storm、Camel、Log4j 2 在内的很多知名项目都应用了 Disruptor 以获取高性能。
 
+# Java 内置队列
+
 # Links
 
 - https://blog.csdn.net/f59130/article/details/74014048
