@@ -7,3 +7,5 @@
 # Links
 
 - https://mp.weixin.qq.com/s/skBA9RwVBLnw8BYZhcUSrA Java 线程池原理及最佳实践（1.5W 字，面试必问）
+
+- https://mp.weixin.qq.com/s/gTiffvjwUulT2nDbt68j6Q 线程池优化与监控
