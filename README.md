@@ -37,7 +37,7 @@
 
 ![并发编程](https://s2.ax1x.com/2019/09/02/nCL9Ej.png)
 
-本篇主要讨论并发编程理论相关的内容，其精排目录导航版请参考 [https://ng-tech.icu/books/Concurrent-Series](https://ng-tech.icu/books/Concurrent-Series)。本篇专注于通用的并发理论知识，各语言级别实现可以参考 [Java 并发编程](http://wx-chevalier.github.io/Java-Series/)、[Go 并发编程](http://wx-chevalier.github.io/Go-Series/)、[JavaScript 异步编程](http://wx-chevalier.github.io/JavaScript-Series/)等。
+本篇主要讨论并发编程理论相关的内容，其精排目录导航版请参考 [https://ng-tech.icu/books/Concurrent-Series](https://ng-tech.icu/books/Concurrent-Series)。本篇专注于通用的并发理论知识，各语言级别实现可以参考 [Java 并发编程](http://wx-chevalier.github.io/books/Java-Series/)、[Go 并发编程](http://wx-chevalier.github.io/books/Go-Series/)、[JavaScript 异步编程](http://wx-chevalier.github.io/books/JavaScript-Series/)等。
 
 # Nav | 关联导航
 
