@@ -68,8 +68,6 @@ int main (void)
 }
 ```
 
-复制
-
 编译、运行上面的代码，会打印出下列信息：
 
 ```cpp
@@ -79,8 +77,6 @@ target_fd 4
 ret -1, errno 1
 epoll_ctl: Operation not permitted
 ```
-
-复制
 
 正常打开了"txt"文件 fd=4, 但调用 epoll_ctl 监视这个 fd 时却 ret=-1 失败了, 并且错误码为 1，错误信息为"Operation not permitted"。错误码指明这个 fd 不能够被 epoll 监视。
 
@@ -243,11 +239,9 @@ int main (int argc, char *argv[])
 }
 ```
 
-复制
-
 将服务端的监听 socket fd 加入到 epoll_wait 的监视集合中，这样当有客户端想要建立连接，就会事件触发 epoll_wait 返回。此时如果 10 个进程同时在 epoll_wait 同一个 epoll 实例就出现了惊群效应。所有 10 个进程都被唤起，但只有一个能成功 accept。
 
-![img](https://ask.qcloudimg.com/http-save/170434/z16wmaq45n.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/z16wmaq45n.jpeg)
 
 为了解决 epoll 惊群，内核后续的高版本又提供了 EPOLLEXCLUSIVE 选项和 SO_REUSEPORT 选项，我个人理解两种解决方案思路上的不同点在于：EPOLLEXCLUSIVE 是在唤起进程阶段起作用，只唤起排在队列最前面的 1 个进程；而 SO_REUSEPORT 是在分配连接时起作用，相当于每个进程自己都有一个独立的 epoll 实例，内核来决策把连接分配给哪个 epoll。
 
@@ -278,13 +272,11 @@ int main (int argc, char *argv[])
         ep_poll_safewake(&ep->poll_wait);
 ```
 
-复制
-
 查阅很多资料后才搞明白其实 epoll 也是一种文件类型，其底层驱动也**实现了 file_operations 中的 poll 函数**，因此一个 epoll 类型的 fd 可以被其他 epoll 实例监视。而 epoll 类型的 fd 只会有“读就绪”的事件。当 epoll 所监视的非 epoll 类型文件有“读就绪”事件时，当前 epoll 也会进入“读就绪”状态。
 
 因此如果一个 epoll 实例监视了另一个 epoll 就会出现递归。举个例子，如图所示：
 
-![img](https://ask.qcloudimg.com/http-save/170434/96bclsw8wa.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/96bclsw8wa.jpeg)
 
 1. epollfd1 监视了 2 个“非 epoll”类型的 fd
 2. epollfd2 监视了 epollfd1 和 2 个“非 epoll”类型的 fd
@@ -319,8 +311,6 @@ static int ep_scan_ready_list(struct eventpoll *ep,
                   void *priv)
 ```
 
-复制
-
 由于 rdllist 链表业务非常繁忙（epoll 增加监视文件、修改监视文件、有事件触发...等情况都需要操作 rdllist)，所以在复制数据到用户空间时，加了一个 ep->mtx 互斥锁来保护 epoll 自身数据结构线程安全，此时其他执行流程里有争抢 ep->mtx 的操作都会因命中 ep->mtx 进入休眠。
 
 但加锁期间很可能有新事件源源不断地产生，进而调用 ep_poll_callback(ep_poll_callback 不用争抢 ep->mtx 所以不会休眠)，新触发的事件需要一个地方来收集，不然就丢事件了。这个用来临时收集新事件的链表就是 ovflist。我的理解是：引入 ovflist 后新产生的事件就不用因为想向 rdllist 里写而去和 ep_send_events_proc 争抢自旋锁(ep->lock), 同时 ep_send_events_proc 也可以放心大胆地在无锁(不持有 ep->lock)的情况下修改 rdllist。
@@ -329,7 +319,7 @@ static int ep_scan_ready_list(struct eventpoll *ep,
 
 ovflist 上的 fd 会合入 rdllist 上等待下一次扫描；如果 txlist 上的 fd 没有处理完，最后也会合入 rdllist。这 3 个链表的关系是这样：
 
-![img](https://ask.qcloudimg.com/http-save/170434/gqecnyhzdi.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/gqecnyhzdi.jpeg)
 
 ### **Question 7：epitem->pwqlist 队列的作用是什么？**
 
@@ -349,8 +339,6 @@ struct epitem {
 };
 ```
 
-复制
-
 回忆一下上文说到，每当用户调用 epoll_ctl()新增一个监视文件，都要给这个文件注册一个回调函数 ep_poll_callback, 当网卡收到数据后软中断会调用这个 ep_poll_callback 把这个 epitem 加入到 ep->rdllist 中。
 
 **pwdlist 就是跟 ep_poll_callback 注册相关的**。
@@ -359,7 +347,7 @@ struct epitem {
 
 pwqlist、epitem、fd、epoll_entry、ep_poll_callback 间的关系是这样：
 
-![img](https://ask.qcloudimg.com/http-save/170434/yl4adascmt.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/yl4adascmt.jpeg)
 
 ### **Question 8：epmutex、ep->mtx、ep->lock 3 把锁的区别是？**
 
@@ -375,7 +363,7 @@ pwqlist、epitem、fd、epoll_entry、ep_poll_callback 间的关系是这样：
 
 用户态调用 epoll_ctl()来操作 epoll 的监视文件时，需要增、删、改、查等动作有着比较高的效率。尤其是当 epoll 监视的文件数量达到百万级的时候，选用不同的数据结构带来的效率差异可能非常大。
 
-![img](https://ask.qcloudimg.com/http-save/170434/77sr8e1z42.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/77sr8e1z42.jpeg)
 
 从时间(增、删、改、查、按序遍历)、空间(存储空间大小、扩展性)等方面考量，红黑树都是非常优秀的数据结构(当然这以红黑树比较高的实现复杂度作为代价)。epoll 红黑树中的 epitem 是按什么顺序组织的。阅读代码可以发现是先比较 2 个文件指针的地址大小，如果相同再比较文件 fd 的大小。
 
@@ -387,11 +375,9 @@ static inline int ep_cmp_ffd(struct epoll_filefd *p1, struct epoll_filefd *p2)
 }
 ```
 
-复制
-
 epoll、epitem、和红黑树间的组织关系是这样：
 
-![img](https://ask.qcloudimg.com/http-save/170434/a2hpfu4iss.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/a2hpfu4iss.jpeg)
 
 ### **Question 10：什么是水平触发、边缘触发？**
 
@@ -403,14 +389,14 @@ epoll、epitem、和红黑树间的组织关系是这样：
 
 水平触发时，客户端输入 8 个字符触发了一次读就绪事件，由于被监视文件上还有数据可读故一直返回读就绪，服务端 4 次循环每次都能取到 2 个字符，直到 8 个字符全部读完。
 
-![img](https://ask.qcloudimg.com/http-save/170434/hlegv61x2w.png?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/hlegv61x2w.png)
 
 边缘触发时，客户端同样输入 8 个字符但服务端一次循环读到 2 个字符后这个读就绪事件就没有了。等客户端再输入一个字符串后，服务端关注到了数据的“变化”继续从缓冲区读接下来的 2 个字符“c”和”d”。
 
-![img](https://ask.qcloudimg.com/http-save/170434/ha4us21zrf.png?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/ha4us21zrf.png)
 
 ### **小结**
 
 本文通过 10 个问题，其实也是从 10 个不同的视角去观察 epoll 这间宏伟的殿堂。至此也基本介绍完了 epoll 从监视事件，到内部数据结构组织、事件处理，最后到 epoll_wait 返回的整体工作过程。最后附上一张 epoll 相关数据结构间的关系图，在学习 epoll 过程中它曾解答了我心中不少的疑惑，我愿称之为灯塔~
 
-![img](https://ask.qcloudimg.com/http-save/170434/qchx8o8yz9.jpeg?imageView2/2/w/2560/h/7000)
+![img](https://assets.ng-tech.icu/item/qchx8o8yz9.jpeg)
