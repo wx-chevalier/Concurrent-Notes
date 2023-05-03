@@ -7,7 +7,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/wx-chevalier/Concurrent-Series">
+  <a href="https://github.com/wx-chevalier/Concurrent-Notes">
     <img src="https://s2.ax1x.com/2019/09/04/nEBum6.png" alt="Logo">
   </a>
 
@@ -16,14 +16,14 @@
   <p align="center">
     📚深入浅出并发编程实践：并发基础、并发控制、并发模型、并发 IO
     <br />
-    <a href="https://github.com/wx-chevalier/Concurrent-Series"><strong>在线阅读 >> </strong></a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Notes"><strong>在线阅读 >> </strong></a>
     <br />
     <br />
-    <a href="https://github.com/wx-chevalier/Concurrent-Series">速览手册</a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Notes">速览手册</a>
     ·
-    <a href="https://github.com/wx-chevalier/Concurrent-Series/issues">Report Bug</a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Notes/issues">Report Bug</a>
     ·
-    <a href="https://github.com/wx-chevalier/Concurrent-Series/issues">参考资料</a>
+    <a href="https://github.com/wx-chevalier/Concurrent-Notes/issues">参考资料</a>
   </p>
 </p>
 
@@ -37,7 +37,7 @@
 
 ![并发编程](https://s2.ax1x.com/2019/09/02/nCL9Ej.png)
 
-本篇主要讨论并发编程理论相关的内容，其精排目录导航版请参考 [https://ng-tech.icu/books/Concurrent-Series](https://ng-tech.icu/books/Concurrent-Series)。本篇专注于通用的并发理论知识，各语言级别实现可以参考 [Java 并发编程](http://wx-chevalier.github.io/books/Java-Series/)、[Go 并发编程](http://wx-chevalier.github.io/books/Go-Series/)、[JavaScript 异步编程](http://wx-chevalier.github.io/books/JavaScript-Series/)等。
+本篇主要讨论并发编程理论相关的内容，其精排目录导航版请参考 [https://ng-tech.icu/books/Concurrent-Notes](https://ng-tech.icu/books/Concurrent-Notes)。本篇专注于通用的并发理论知识，各语言级别实现可以参考 [Java 并发编程](http://wx-chevalier.github.io/books/Java-Notes/)、[Go 并发编程](http://wx-chevalier.github.io/books/Go-Notes/)、[JavaScript 异步编程](http://wx-chevalier.github.io/books/JavaScript-Notes/)等。
 
 # Nav | 关联导航
 
@@ -109,13 +109,13 @@ Contributions are what make the open source community such an amazing place to b
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/wx-chevalier/Concurrent-Series.svg?style=flat-square
-[contributors-url]: https://github.com/wx-chevalier/Concurrent-Series/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/wx-chevalier/Concurrent-Series.svg?style=flat-square
-[forks-url]: https://github.com/wx-chevalier/Concurrent-Series/network/members
-[stars-shield]: https://img.shields.io/github/stars/wx-chevalier/Concurrent-Series.svg?style=flat-square
-[stars-url]: https://github.com/wx-chevalier/Concurrent-Series/stargazers
-[issues-shield]: https://img.shields.io/github/issues/wx-chevalier/Concurrent-Series.svg?style=flat-square
-[issues-url]: https://github.com/wx-chevalier/Concurrent-Series/issues
-[license-shield]: https://img.shields.io/github/license/wx-chevalier/Concurrent-Series.svg?style=flat-square
-[license-url]: https://github.com/wx-chevalier/Concurrent-Series/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/wx-chevalier/Concurrent-Notes.svg?style=flat-square
+[contributors-url]: https://github.com/wx-chevalier/Concurrent-Notes/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/wx-chevalier/Concurrent-Notes.svg?style=flat-square
+[forks-url]: https://github.com/wx-chevalier/Concurrent-Notes/network/members
+[stars-shield]: https://img.shields.io/github/stars/wx-chevalier/Concurrent-Notes.svg?style=flat-square
+[stars-url]: https://github.com/wx-chevalier/Concurrent-Notes/stargazers
+[issues-shield]: https://img.shields.io/github/issues/wx-chevalier/Concurrent-Notes.svg?style=flat-square
+[issues-url]: https://github.com/wx-chevalier/Concurrent-Notes/issues
+[license-shield]: https://img.shields.io/github/license/wx-chevalier/Concurrent-Notes.svg?style=flat-square
+[license-url]: https://github.com/wx-chevalier/Concurrent-Notes/blob/master/LICENSE.txt
