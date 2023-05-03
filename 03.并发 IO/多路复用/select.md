@@ -63,7 +63,7 @@ poll 调用需要传递的是一个 pollfd 结构的数组，调用返回时结�
 
 (1)使用 copy_from_user 从用户空间拷贝 fd_set 到内核空间
 
-(2)注册回调函数\*\*pollwait
+(2)注册回调函数 `**pollwait`
 
 (3)遍历所有 fd，调用其对应的 poll 方法(对于 socket，这个 poll 方法是 sock_poll，sock_poll 根据情况会调用到 tcp_poll,udp_poll 或者 datagram_poll)(4)以 tcp_poll 为例，其核心实现就是\*\*pollwait，也就是上面注册的回调函数。(5)\_\_pollwait 的主要工作就是把 current(当前进程)挂到设备的等待队列中，不同的设备有不同的等待队列，对于 tcp_poll 来说，其等待队列是 sk->sk_sleep(注意把进程挂到等待队列中并不代表进程已经睡眠了)。在设备收到一条消息(网络设备)或填写完文件数 据(磁盘设备)后，会唤醒设备等待队列上睡眠的进程，这时 current 便被唤醒了。(6)poll 方法返回时会返回一个描述读写操作是否就绪的 mask 掩码，根据这个 mask 掩码给 fd_set 赋值。(7)如果遍历完所有的 fd，还没有返回一个可读写的 mask 掩码，则会调用 schedule_timeout 是调用 select 的进程(也就是 current)进入睡眠。当设备驱动发生自身资源可读写后，会唤醒其等待队列上睡眠的进程。如果超过一定的超时时间(schedule_timeout 指定)，还是没人唤醒，则调用 select 的进程会重新被唤醒获得 CPU，进而重新遍历 fd，判断有没有就绪的 fd。(8)把 fd_set 从内核空间拷贝到用户空间。多客户端请求服务端，服务端与各客户端保持长连接并且能接收到各客户端数据大体思路如下：
 
