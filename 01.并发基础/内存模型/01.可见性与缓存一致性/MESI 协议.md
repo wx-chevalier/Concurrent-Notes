@@ -17,7 +17,7 @@
 
 传统的 MESI 协议中有两个行为的执行成本比较大。一个是将某个 Cache Line 标记为 Invalid 状态，另一个是当某 Cache Line 当前状态为 Invalid 时写入新的数据。所以 CPU 通过 Store Buffer 和 Invalidate Queue 组件来降低这类操作的延时。如图：
 
-![CPU 间高速缓存示意图](https://i.postimg.cc/8kRGLBr3/image.png)
+![CPU 间高速缓存示意图](https://assets.ng-tech.icu/item/20230524154313.png)
 
 当一个核心在 Invalid 状态进行写入时，首先会给其它 CPU 核发送 Invalid 消息，然后把当前写入的数据写入到 Store Buffer 中。然后异步在某个时刻真正的写入到 Cache Line 中。当前 CPU 核如果要读 Cache Line 中的数据，需要先扫描 Store Buffer 之后再读取 Cache Line（Store-Buffer Forwarding）。但是此时其它 CPU 核是看不到当前核的 Store Buffer 中的数据的，要等到 Store Buffer 中的数据被刷到了 Cache Line 之后才会触发失效操作。而当一个 CPU 核收到 Invalid 消息时，会把消息写入自身的 Invalidate Queue 中，随后异步将其设为 Invalid 状态。和 Store Buffer 不同的是，当前 CPU 核心使用 Cache 时并不扫描 Invalidate Queue 部分，所以可能会有极短时间的脏读问题。
 
