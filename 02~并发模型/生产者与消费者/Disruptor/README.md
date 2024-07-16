@@ -5,5 +5,3 @@ Disruptor 是英国外汇交易公司 LMAX 开发的一个高性能队列，研�
 Disruptor 是一个高性能的异步处理框架，或者可以认为是最快的消息框架（轻量的 JMS），也可以认为是一个观察者模式的实现，或者事件监听模式的实现。目前，包括 Apache Storm、Camel、Log4j 2 在内的很多知名项目都应用了 Disruptor 以获取高性能。
 
 # Links
-
-- https://blog.csdn.net/f59130/article/details/74014048
