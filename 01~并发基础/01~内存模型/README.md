@@ -8,7 +8,7 @@
 
 现代计算机采用了多层次的存储结构，从 CPU 到主存之间有多个缓存层：
 
-![多层次存储器](https://assets.ng-tech.icu/item/20230418222347.png)
+![多层次存储器](https://ngte-superbed.oss-cn-beijing.aliyuncs.com/item/20230418222347.png)
 
 各个存储层级的访问速度差异巨大：
 

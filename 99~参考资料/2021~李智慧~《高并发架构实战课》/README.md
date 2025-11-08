@@ -8,7 +8,7 @@
 
 根据高并发系统的特点，我把这个专栏划分成了 5 个实战模块。
 
-![图片](https://assets.ng-tech.icu/item/18c384eb0433ff0fa638f72f3d55514b.jpg)
+![图片](https://ngte-superbed.oss-cn-beijing.aliyuncs.com/item/18c384eb0433ff0fa638f72f3d55514b.jpg)
 
 **实战模块一：高并发系统的海量数据处理架构案例**
 
