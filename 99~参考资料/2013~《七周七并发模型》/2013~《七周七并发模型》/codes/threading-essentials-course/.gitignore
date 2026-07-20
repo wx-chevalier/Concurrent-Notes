@@ -1,9 +1,0 @@
-target/
-*.class
-*.project
-*.settings
-*.classpath
-
-# IntelliJ files
-.idea/
-*.iml
